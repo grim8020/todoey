@@ -2,11 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddTaskScreen extends StatelessWidget {
+  final Function addTaskCallback;
+
+  AddTaskScreen(this.addTaskCallback);
+
   @override
   Widget build(BuildContext context) {
+    late String newTaskTitle;
+
     return Container(
       color: Color(0xff757575),
       child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child:
@@ -20,8 +33,11 @@ class AddTaskScreen extends StatelessWidget {
                   color: Colors.lightBlueAccent),
             ),
             TextField(
-              textAlign: TextAlign.center,
               autofocus: true,
+              textAlign: TextAlign.center,
+              onChanged: (newText) {
+                newTaskTitle = newText;
+              },
             ),
             SizedBox(height: 15),
             Padding(
@@ -29,6 +45,7 @@ class AddTaskScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   //add task to the list
+                  addTaskCallback(newTaskTitle);
                 },
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -45,13 +62,6 @@ class AddTaskScreen extends StatelessWidget {
               ),
             ),
           ]),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
         ),
       ),
     );
